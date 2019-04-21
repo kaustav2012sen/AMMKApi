@@ -1,0 +1,14 @@
+D:\Business Directory\Web Projects\Dot Net Core\AdiMohiniMohanKanjilal\InventoryManagementSystem\InventoryManagementSystem\bin\Debug\netcoreapp2.1\InventoryManagementSystem.deps.json
+D:\Business Directory\Web Projects\Dot Net Core\AdiMohiniMohanKanjilal\InventoryManagementSystem\InventoryManagementSystem\bin\Debug\netcoreapp2.1\InventoryManagementSystem.runtimeconfig.json
+D:\Business Directory\Web Projects\Dot Net Core\AdiMohiniMohanKanjilal\InventoryManagementSystem\InventoryManagementSystem\bin\Debug\netcoreapp2.1\InventoryManagementSystem.runtimeconfig.dev.json
+D:\Business Directory\Web Projects\Dot Net Core\AdiMohiniMohanKanjilal\InventoryManagementSystem\InventoryManagementSystem\bin\Debug\netcoreapp2.1\InventoryManagementSystem.dll
+D:\Business Directory\Web Projects\Dot Net Core\AdiMohiniMohanKanjilal\InventoryManagementSystem\InventoryManagementSystem\obj\Debug\netcoreapp2.1\InventoryManagementSystem.csprojAssemblyReference.cache
+D:\Business Directory\Web Projects\Dot Net Core\AdiMohiniMohanKanjilal\InventoryManagementSystem\InventoryManagementSystem\obj\Debug\netcoreapp2.1\InventoryManagementSystem.csproj.CoreCompileInputs.cache
+D:\Business Directory\Web Projects\Dot Net Core\AdiMohiniMohanKanjilal\InventoryManagementSystem\InventoryManagementSystem\obj\Debug\netcoreapp2.1\InventoryManagementSystem.RazorAssemblyInfo.cache
+D:\Business Directory\Web Projects\Dot Net Core\AdiMohiniMohanKanjilal\InventoryManagementSystem\InventoryManagementSystem\obj\Debug\netcoreapp2.1\InventoryManagementSystem.RazorAssemblyInfo.cs
+D:\Business Directory\Web Projects\Dot Net Core\AdiMohiniMohanKanjilal\InventoryManagementSystem\InventoryManagementSystem\obj\Debug\netcoreapp2.1\InventoryManagementSystem.AssemblyInfoInputs.cache
+D:\Business Directory\Web Projects\Dot Net Core\AdiMohiniMohanKanjilal\InventoryManagementSystem\InventoryManagementSystem\obj\Debug\netcoreapp2.1\InventoryManagementSystem.AssemblyInfo.cs
+D:\Business Directory\Web Projects\Dot Net Core\AdiMohiniMohanKanjilal\InventoryManagementSystem\InventoryManagementSystem\obj\Debug\netcoreapp2.1\InventoryManagementSystem.RazorTargetAssemblyInfo.cache
+D:\Business Directory\Web Projects\Dot Net Core\AdiMohiniMohanKanjilal\InventoryManagementSystem\InventoryManagementSystem\bin\Debug\netcoreapp2.1\InventoryManagementSystem.pdb
+D:\Business Directory\Web Projects\Dot Net Core\AdiMohiniMohanKanjilal\InventoryManagementSystem\InventoryManagementSystem\obj\Debug\netcoreapp2.1\InventoryManagementSystem.dll
+D:\Business Directory\Web Projects\Dot Net Core\AdiMohiniMohanKanjilal\InventoryManagementSystem\InventoryManagementSystem\obj\Debug\netcoreapp2.1\InventoryManagementSystem.pdb
