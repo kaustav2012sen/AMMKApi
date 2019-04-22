@@ -12537,11 +12537,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Business Directory\\Web Projects\\Dot Net Core\\AdiMohiniMohanKanjilal\\InventoryManagementSystem\\InventoryManagementSystem\\InventoryManagementSystem.csproj",
+      "projectUniqueName": "D:\\Business Directory\\Web Projects\\Dot Net Core\\AdiMohiniMohanKanjilal\\GitRepository_AppPath\\AMMKApi\\InventoryManagementSystem\\InventoryManagementSystem.csproj",
       "projectName": "InventoryManagementSystem",
-      "projectPath": "D:\\Business Directory\\Web Projects\\Dot Net Core\\AdiMohiniMohanKanjilal\\InventoryManagementSystem\\InventoryManagementSystem\\InventoryManagementSystem.csproj",
+      "projectPath": "D:\\Business Directory\\Web Projects\\Dot Net Core\\AdiMohiniMohanKanjilal\\GitRepository_AppPath\\AMMKApi\\InventoryManagementSystem\\InventoryManagementSystem.csproj",
       "packagesPath": "C:\\Users\\Kaustav\\.nuget\\packages\\",
-      "outputPath": "D:\\Business Directory\\Web Projects\\Dot Net Core\\AdiMohiniMohanKanjilal\\InventoryManagementSystem\\InventoryManagementSystem\\obj\\",
+      "outputPath": "D:\\Business Directory\\Web Projects\\Dot Net Core\\AdiMohiniMohanKanjilal\\GitRepository_AppPath\\AMMKApi\\InventoryManagementSystem\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
