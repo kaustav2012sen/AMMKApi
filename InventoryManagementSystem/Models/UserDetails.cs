@@ -12,7 +12,11 @@ namespace InventoryManagementSystem.Models
         [DataMember]
         public string UserID { get; set; }
         [DataMember]
-        public string UserName { get; set; }
+        public string FirstName { get; set; }
+        [DataMember]
+        public string MiddleName { get; set; }
+        [DataMember]
+        public string LastName { get; set; }
         [DataMember]
         public string UserRole { get; set; }
     }

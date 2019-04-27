@@ -51,21 +51,23 @@ namespace InventoryManagementSystem.Controllers
         }
 
         [HttpPost]
-        [ActionName("Post02")]
+        [ActionName("LoginAuthentication")]
         [Route("[action]")]
-        public ActionResult Post02([FromBody] JObject postBody)
+        public ActionResult LoginAuthentication([FromBody] JObject postBody)
         {
 
             UserDetails ud = new UserDetails();
             string UserID = postBody["UserID"].ToString();
             string Password = postBody["Password"].ToString();
 
+            ud=udal.GetUserDetails(UserID, Password);
 
-            if (UserID == "2413" && Password == "@abcd1234")
-            {
 
-                ud = udal.GetUserDetails();
-            }
+            //if (UserID == "2413" && Password == "@abcd1234")
+            //{
+
+            //    ud = udal.GetUserDetails();
+            //}
 
 
             return Ok(ud);

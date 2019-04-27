@@ -13,6 +13,8 @@ CREATE TABLE [dbo].[UserMaster](
 	[MiddleName] [nvarchar](50) NULL,
 	[LastName] [nvarchar](50) NULL,
 	[UserName] [nvarchar](50) NOT NULL,
+	[Password] [nvarchar](50) NOT NULL,
+	[IsDefaultPassword] [bit] NOT NULL,
 	[RoleID] [int] NOT NULL,
 	[Deleted] [bit] NULL,
 	[CreatedBy] [nvarchar](100) NULL,

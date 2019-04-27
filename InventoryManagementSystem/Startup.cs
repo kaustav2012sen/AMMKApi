@@ -15,12 +15,30 @@ namespace InventoryManagementSystem
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        //public Startup(IConfiguration configuration)
+        //{
+        //    Configuration = configuration;
+        //}
 
-        public IConfiguration Configuration { get; }
+        //public IConfiguration Configuration { get; }
+
+        public IConfigurationRoot Configuration
+        {
+            get;
+            set;
+        }
+        public static string ConnectionString
+        {
+            get;
+            private set;
+        }
+        public Startup(IHostingEnvironment env)
+        {
+            Configuration = new ConfigurationBuilder().
+                SetBasePath(env.ContentRootPath).
+                AddJsonFile("appSettings.json").
+                Build();
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -40,6 +58,8 @@ namespace InventoryManagementSystem
                 app.UseHsts();
             }
 
+            ConnectionString = Configuration["ConnectionStrings:DefaultConnection"];
+
             app.UseHttpsRedirection();
             app.UseMvc(routes =>
             {
@@ -48,5 +68,7 @@ namespace InventoryManagementSystem
                     template: "{controller=Login}/{action=Index}");
             });
         }
+
+        
     }
 }
