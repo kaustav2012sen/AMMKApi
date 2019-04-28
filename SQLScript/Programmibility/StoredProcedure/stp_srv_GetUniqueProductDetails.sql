@@ -19,7 +19,7 @@ SET NOCOUNT ON;
 BEGIN
 
 	SELECT PM.ProductID,PM.ProductName,PM.BillingName,PM.[Type],PM.GST,PM.HSN FROM 	 
-	ProductMaster PM
+	ProductMaster PM ORDER BY PM.ProductName
 	
 END
 GO
