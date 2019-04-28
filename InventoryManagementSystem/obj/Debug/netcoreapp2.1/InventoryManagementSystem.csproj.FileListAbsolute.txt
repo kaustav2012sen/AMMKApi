@@ -26,3 +26,17 @@ D:\Business Directory\Web Projects\Dot Net Core\AdiMohiniMohanKanjilal\GitReposi
 D:\Business Directory\Web Projects\Dot Net Core\AdiMohiniMohanKanjilal\GitRepository_AppPath\AMMKApi\InventoryManagementSystem\bin\Debug\netcoreapp2.1\InventoryManagementSystem.dll
 D:\Business Directory\Web Projects\Dot Net Core\AdiMohiniMohanKanjilal\GitRepository_AppPath\AMMKApi\InventoryManagementSystem\bin\Debug\netcoreapp2.1\InventoryManagementSystem.pdb
 D:\Business Directory\Web Projects\Dot Net Core\AdiMohiniMohanKanjilal\GitRepository_AppPath\AMMKApi\InventoryManagementSystem\obj\Debug\netcoreapp2.1\InventoryManagementSystem.RazorTargetAssemblyInfo.cache
+F:\Adi Mohini Mohan Kanjilal\project\AMMKApi\InventoryManagementSystem\bin\Debug\netcoreapp2.1\InventoryManagementSystem.deps.json
+F:\Adi Mohini Mohan Kanjilal\project\AMMKApi\InventoryManagementSystem\bin\Debug\netcoreapp2.1\InventoryManagementSystem.runtimeconfig.json
+F:\Adi Mohini Mohan Kanjilal\project\AMMKApi\InventoryManagementSystem\bin\Debug\netcoreapp2.1\InventoryManagementSystem.runtimeconfig.dev.json
+F:\Adi Mohini Mohan Kanjilal\project\AMMKApi\InventoryManagementSystem\bin\Debug\netcoreapp2.1\InventoryManagementSystem.dll
+F:\Adi Mohini Mohan Kanjilal\project\AMMKApi\InventoryManagementSystem\bin\Debug\netcoreapp2.1\InventoryManagementSystem.pdb
+F:\Adi Mohini Mohan Kanjilal\project\AMMKApi\InventoryManagementSystem\obj\Debug\netcoreapp2.1\InventoryManagementSystem.csproj.CoreCompileInputs.cache
+F:\Adi Mohini Mohan Kanjilal\project\AMMKApi\InventoryManagementSystem\obj\Debug\netcoreapp2.1\InventoryManagementSystem.RazorAssemblyInfo.cache
+F:\Adi Mohini Mohan Kanjilal\project\AMMKApi\InventoryManagementSystem\obj\Debug\netcoreapp2.1\InventoryManagementSystem.RazorAssemblyInfo.cs
+F:\Adi Mohini Mohan Kanjilal\project\AMMKApi\InventoryManagementSystem\obj\Debug\netcoreapp2.1\InventoryManagementSystem.AssemblyInfoInputs.cache
+F:\Adi Mohini Mohan Kanjilal\project\AMMKApi\InventoryManagementSystem\obj\Debug\netcoreapp2.1\InventoryManagementSystem.AssemblyInfo.cs
+F:\Adi Mohini Mohan Kanjilal\project\AMMKApi\InventoryManagementSystem\obj\Debug\netcoreapp2.1\InventoryManagementSystem.RazorTargetAssemblyInfo.cache
+F:\Adi Mohini Mohan Kanjilal\project\AMMKApi\InventoryManagementSystem\obj\Debug\netcoreapp2.1\InventoryManagementSystem.dll
+F:\Adi Mohini Mohan Kanjilal\project\AMMKApi\InventoryManagementSystem\obj\Debug\netcoreapp2.1\InventoryManagementSystem.pdb
+F:\Adi Mohini Mohan Kanjilal\project\AMMKApi\InventoryManagementSystem\obj\Debug\netcoreapp2.1\InventoryManagementSystem.csprojAssemblyReference.cache

@@ -10,6 +10,8 @@ namespace InventoryManagementSystem.Models
     public class UserDetails
     {
         [DataMember]
+        public bool succeded { get; set; }
+        [DataMember]
         public string UserID { get; set; }
         [DataMember]
         public string FirstName { get; set; }

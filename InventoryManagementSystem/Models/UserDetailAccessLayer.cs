@@ -57,12 +57,26 @@ namespace InventoryManagementSystem.Models
             da.Fill(dt);
             con.Close();
 
+            if(dt.Rows.Count>0)
+            {
+                userDetails.succeded = true;
+                userDetails.UserID = dt.Rows[0]["UserName"].ToString();
+                userDetails.FirstName = dt.Rows[0]["FirstName"].ToString();
+                userDetails.MiddleName = dt.Rows[0]["MiddleName"].ToString();
+                userDetails.LastName = dt.Rows[0]["LastName"].ToString();
+                userDetails.UserRole = dt.Rows[0]["RoleName"].ToString();
+            }
+            else
+            {
+                userDetails.succeded = false;
+                userDetails.UserID = string.Empty;
+                userDetails.FirstName = string.Empty;
+                userDetails.MiddleName = string.Empty;
+                userDetails.LastName = string.Empty;
+                userDetails.UserRole = string.Empty;
+            }
 
-            userDetails.UserID = dt.Rows[0]["UserName"].ToString();
-            userDetails.FirstName = dt.Rows[0]["FirstName"].ToString();
-            userDetails.MiddleName = dt.Rows[0]["MiddleName"].ToString();
-            userDetails.LastName = dt.Rows[0]["LastName"].ToString();
-            userDetails.UserRole = dt.Rows[0]["RoleName"].ToString();
+            
 
 
 
