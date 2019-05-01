@@ -328,3 +328,12 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+
+# Ignore 'obj' folder
+obj/
+Debug/
+*.cache
+*.props
+*.targets
+*.json
+netcoreapp2.1/
