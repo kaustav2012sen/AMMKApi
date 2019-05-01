@@ -22,14 +22,23 @@ AS
 SET NOCOUNT ON;
 BEGIN
 	DECLARE @ActionCompletion BIT, @Message nvarchar(512)
-	IF EXISTS(SELECT * FROM ProductLotMApping WHERE Barcode = @BarcodeNumber AND BarcodeStatus <> @StockAction)
+	
+	IF(@StockAction > 1)
 	BEGIN
-		UPDATE ProductLotMApping
-		SET BarcodeStatus = @StockAction, ModifiedBy = @CreatedBy, DateModified = GETDATE()
-		WHERE Barcode = @BarcodeNumber;
-		
-		SET @ActionCompletion = 1;
-		SET @Message = 'Barcode status updated successfully.';
+		IF EXISTS(SELECT * FROM ProductLotMApping WHERE Barcode = @BarcodeNumber AND BarcodeStatus = (@StockAction - 1))
+		BEGIN
+			UPDATE ProductLotMApping
+			SET BarcodeStatus = @StockAction, ModifiedBy = @CreatedBy, DateModified = GETDATE()
+			WHERE Barcode = @BarcodeNumber;
+			
+			SET @ActionCompletion = 1;
+			SET @Message = 'Barcode status updated successfully.';
+		END
+		ELSE
+		BEGIN
+			SET @ActionCompletion = 0;
+			SET @Message = 'Barcode status failed to update. Please contact with admin.';
+		END
 	END
 	ELSE
 	BEGIN
