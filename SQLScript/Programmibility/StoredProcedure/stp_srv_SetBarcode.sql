@@ -31,7 +31,7 @@ BEGIN
 
 	INSERT ProductLotMapping (ProductID,Barcode,LotNumber,BarcodeStatus,LotDate,Deleted,DateEntered)(SELECT VALUE3,VALUE1,VALUE2,1,GETUTCDATE(),0,GETUTCDATE() FROM @Barcodelist)
 
-	SELECT PM.ProductID,ProductName,PM.Barcode,PM.BarcodeStatus,PM.LotNumber,LotDate FROM ProductLotMapping PM 
+	SELECT PM.ProductID,LM.ProductName,PM.Barcode,PM.BarcodeStatus,PM.LotNumber,LotDate FROM ProductLotMapping PM 
 	INNER JOIN LottingMaster LM ON PM.ProductID=LM.LotID
 	WHERE PM.ProductID=@ProductIDforRetreival AND PM.LotNumber=@LotNumberforRetreival;
 	

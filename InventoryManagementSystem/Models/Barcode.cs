@@ -14,6 +14,8 @@ namespace InventoryManagementSystem.Models
         [DataMember]
         public string ProductID { get; set; }
         [DataMember]
+        public string ProductName { get; set; }
+        [DataMember]
         public string BarcodeNumber{get;set;}
         [DataMember]
         public string LotDate { get; set; }

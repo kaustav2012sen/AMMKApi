@@ -78,6 +78,7 @@ namespace InventoryManagementSystem.Models
                     barcode = new Barcode();
 
                     barcode.ProductID = dt.Rows[i]["ProductID"].ToString();
+                    barcode.ProductName = dt.Rows[i]["ProductName"].ToString();
                     barcode.BarcodeNumber = dt.Rows[i]["Barcode"].ToString();
                     barcode.LotDate = dt.Rows[i]["LotDate"].ToString();
                     barcode.LotNumber = LotNumber;
