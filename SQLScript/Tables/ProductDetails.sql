@@ -8,7 +8,7 @@ BEGIN
 CREATE TABLE [dbo].[ProductDetails](
 	[ProductDetilsID] [int] IDENTITY(1,1) NOT NULL,
 	[ProductID] [int] NOT NULL,
-	[Barcode] [nvarchar](12) NULL,
+	[Barcode] [nvarchar](20) NULL,
 	[Deleted] [bit] NULL,
 	[CreatedBy] [nvarchar](100) NULL,
 	[DateEntered] [datetime] NULL,
@@ -24,3 +24,5 @@ ALTER TABLE [dbo].[ProductDetails] ADD  CONSTRAINT [DF_ProductDetails_Deleted]  
 ALTER TABLE [dbo].[ProductDetails] ADD CONSTRAINT [FK_ProductDetails_ProductMaster] FOREIGN KEY (ProductID) REFERENCES ProductMaster (ProductID)
 END
 GO
+
+

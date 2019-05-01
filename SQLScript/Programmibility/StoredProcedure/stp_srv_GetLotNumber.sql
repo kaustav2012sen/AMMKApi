@@ -11,25 +11,23 @@ GO
 -- Description:	<To Get Details of All Distributer>
 -- Execute: 
 	/*DECLARE @Number INT
-	EXEC stp_srv_GetLotNumber 'PAS-001',@Number OUTPUT
+	EXEC stp_srv_GetLotNumber 8,@Number OUTPUT
 	PRINT @Number*/
 -- 
 -- =============================================
 CREATE PROCEDURE [dbo].[stp_srv_GetLotNumber]
 (
-@BillingName NVARCHAR(100),
+@ProductID INT,
 @LotNumber INT OUTPUT
 )
 AS
 SET NOCOUNT ON;
 BEGIN
 
-	SET @LotNumber=(SELECT LM.LotNumber FROM LottingMaster LM WHERE BillingName=@BillingName);
+	SET @LotNumber=(SELECT LM.LotNumber FROM LottingMaster LM WHERE LM.LotID=@ProductID);
 	SET @LotNumber=@LotNumber+1;
 
-	UPDATE LottingMaster SET LotNumber=@LotNumber WHERE BillingName=@BillingName;
+	UPDATE LottingMaster SET LotNumber=@LotNumber WHERE LotID=@ProductID;
 	
 END
 GO
-
---SELECT * FROM LottingMAster

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using InventoryManagementSystem.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
@@ -18,27 +20,21 @@ namespace InventoryManagementSystem.Controllers
         [Route("[action]")]
         public ActionResult GenerateBarcodeByLot([FromBody] JObject postBody)
         {
-
+            BarcodeDataAccessLayer bdac = new BarcodeDataAccessLayer();
+            List<Barcode> barcode = new List<Barcode>();
             //UserDetails ud = new UserDetails();
-            string BillingName = postBody["BillingName"].ToString();
+            string ProductID = postBody["ProductID"].ToString();
             string Quantity = postBody["Quantity"].ToString();
 
-            // ud = udal.GetUserDetails(UserID, Password);
+            string LotNumber=bdac.GetLotNumber(ProductID);
+            DataTable table = bdac.InsertBarcode(ProductID, Convert.ToInt32(Quantity), LotNumber);
+            barcode = bdac.GetBarcodeList(table,LotNumber,ProductID);
 
 
-            //if (UserID == "2413" && Password == "@abcd1234")
-            //{
-
-            //    ud = udal.GetUserDetails();
-            //}
-
-
-            //return Ok(ud);
-
-            return Ok();
+            return Ok(barcode);
         }
 
-
+        
 
         [HttpPost]
         [ActionName("UpdateStockForStore")]

@@ -12,9 +12,15 @@ namespace InventoryManagementSystem.Models
         [DataMember]
         public string LotNumber { get; set; }
         [DataMember]
-        public string BillingName { get; set; }
+        public string ProductID { get; set; }
         [DataMember]
         public string BarcodeNumber{get;set;}
-        
+        [DataMember]
+        public string LotDate { get; set; }
+
+        public static implicit operator Barcode(ProductDetails v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
