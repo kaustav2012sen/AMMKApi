@@ -92,6 +92,40 @@ namespace InventoryManagementSystem.Models
         }
 
 
+        public StockStatus StockInitialization(string BarcodeNumber,string StockAction)
+        {
+            StockStatus ss = new StockStatus();
+
+            DataTable dt = new DataTable();
+
+            SqlConnection con = new SqlConnection(Connection);
+            con.Open();
+            SqlDataAdapter da = new SqlDataAdapter();
+            SqlCommand cmd = new SqlCommand("stp_srv_StockAction", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@BarcodeNumber", SqlDbType.Int).Value = Convert.ToInt32(BarcodeNumber);
+            cmd.Parameters.Add("@StockAction", SqlDbType.Int).Value = Convert.ToInt32(StockAction);
+
+                        
+            da.SelectCommand = cmd;
+            da.Fill(dt);
+            con.Close();
+
+            if(dt.Rows.Count>0)
+            {
+                
+            }
+            else
+            {
+                ss.BarcodeStatus = string.Empty;
+                ss.Message = "The Barcode is invalid or not yet generated. Please contact the admin for more details";
+                ss.BarcodeNumber = BarcodeNumber;
+                ss.ActionCompletion = false;
+            }
+
+            return ss;
+        }
+
         
     }
 }

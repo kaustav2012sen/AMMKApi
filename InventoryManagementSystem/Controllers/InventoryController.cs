@@ -37,16 +37,23 @@ namespace InventoryManagementSystem.Controllers
         
 
         [HttpPost]
-        [ActionName("UpdateStockForStore")]
+        [ActionName("UpdateStock")]
         [Route("[action]")]
-        public ActionResult UpdateStockForStore([FromBody] JObject postBody)
+        public ActionResult UpdateStock([FromBody] JObject postBody)
         {
 
             //UserDetails ud = new UserDetails();
-            string BillingName = postBody["BillingName"].ToString();
-            string Quantity = postBody["Quantity"].ToString();
+            string BarcodeNumber = postBody["BarcodeNumber"].ToString();
+            string StockAction = postBody["StockAction"].ToString();
 
-            
+            #region Action Definition
+            //Stock Action = 1 -- Generate Barcode
+            //Stock Action = 2 -- Stock Out
+            //Stock Action = 3 -- Stock In
+            #endregion
+
+
+
             return Ok();
         }
 
