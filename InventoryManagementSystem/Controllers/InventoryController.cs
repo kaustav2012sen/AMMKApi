@@ -72,5 +72,21 @@ namespace InventoryManagementSystem.Controllers
             return Ok();
         }
 
+        [HttpPost]
+        [ActionName("StockUpdate")]
+        [Route("[action]")]
+        public ActionResult StockUpdate([FromBody] JObject postBody)
+        {
+            BarcodeDataAccessLayer bdac = new BarcodeDataAccessLayer();
+            List<Barcode> barcode = new List<Barcode>();
+            //UserDetails ud = new UserDetails();
+            string BarcodeNumber = postBody["BarcodeNumber"].ToString();
+            string StockAction = postBody["StockAction"].ToString();
+
+            StockStatus ss1 = new StockStatus();
+            ss1 = bdac.StockInitialization(BarcodeNumber, StockAction);
+                        
+            return Ok(ss1);
+        }
     }
 }

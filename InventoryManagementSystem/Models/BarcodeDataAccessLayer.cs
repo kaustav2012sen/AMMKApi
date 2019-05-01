@@ -103,7 +103,7 @@ namespace InventoryManagementSystem.Models
             SqlDataAdapter da = new SqlDataAdapter();
             SqlCommand cmd = new SqlCommand("stp_srv_StockAction", con);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("@BarcodeNumber", SqlDbType.Int).Value = Convert.ToInt32(BarcodeNumber);
+            cmd.Parameters.Add("@BarcodeNumber", SqlDbType.NVarChar).Value = Convert.ToString(BarcodeNumber);
             cmd.Parameters.Add("@StockAction", SqlDbType.Int).Value = Convert.ToInt32(StockAction);
 
                         
@@ -113,7 +113,10 @@ namespace InventoryManagementSystem.Models
 
             if(dt.Rows.Count>0)
             {
-                
+                ss.BarcodeStatus = StockAction;
+                ss.Message = Convert.ToString(dt.Rows[0]["Message"]);
+                ss.BarcodeNumber = BarcodeNumber;
+                ss.ActionCompletion = Convert.ToBoolean(dt.Rows[0]["ActionCompletion"]);
             }
             else
             {
