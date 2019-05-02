@@ -83,7 +83,7 @@ namespace InventoryManagementSystem.Controllers
             string BarcodeNumber = postBody["BarcodeNumber"].ToString();
             string StockAction = postBody["StockAction"].ToString();
 
-            StockStatus ss1 = new StockStatus();
+            List<StockStatus> ss1 = new List<StockStatus>();
             ss1 = bdac.StockInitialization(BarcodeNumber, StockAction);
                         
             return Ok(ss1);

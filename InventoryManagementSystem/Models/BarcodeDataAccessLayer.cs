@@ -93,9 +93,10 @@ namespace InventoryManagementSystem.Models
         }
 
 
-        public StockStatus StockInitialization(string BarcodeNumber,string StockAction)
+        public List<StockStatus> StockInitialization(string BarcodeNumber,string StockAction)
         {
-            StockStatus ss = new StockStatus();
+            List<StockStatus> stockStat= new List<StockStatus>();
+            StockStatus ss;
 
             DataTable dt = new DataTable();
 
@@ -114,20 +115,25 @@ namespace InventoryManagementSystem.Models
 
             if(dt.Rows.Count>0)
             {
+                ss= new StockStatus();
                 ss.BarcodeStatus = StockAction;
                 ss.Message = Convert.ToString(dt.Rows[0]["Message"]);
                 ss.BarcodeNumber = BarcodeNumber;
                 ss.ActionCompletion = Convert.ToBoolean(dt.Rows[0]["ActionCompletion"]);
+
+                stockStat.Add(ss);
             }
             else
             {
+                ss = new StockStatus();
                 ss.BarcodeStatus = string.Empty;
                 ss.Message = "The Barcode is invalid or not yet generated. Please contact the admin for more details";
                 ss.BarcodeNumber = BarcodeNumber;
                 ss.ActionCompletion = false;
+                stockStat.Add(ss);
             }
 
-            return ss;
+            return stockStat;
         }
 
         
