@@ -8,6 +8,7 @@ BEGIN
 CREATE TABLE [dbo].[ProductLotMapping](
 	[ProductLotMappingID] [int] IDENTITY(1,1) NOT NULL,
 	[ProductID] [int] NOT NULL,
+	[VendorID] [int] NULL,
 	[Barcode] [nvarchar](20) NULL,
 	[BarcodeStatus] [int] NOT NULL,
 	[LotNumber] [int] NOT NULL,
@@ -24,6 +25,6 @@ CREATE TABLE [dbo].[ProductLotMapping](
 ) ON [PRIMARY]
 
 ALTER TABLE [dbo].[ProductLotMapping] ADD  CONSTRAINT [DF_ProductLotMapping_Deleted]  DEFAULT ((0)) FOR [Deleted]
-
+ALTER TABLE [dbo].[ProductLotMapping] ADD CONSTRAINT [FK_ProductLotMapping_VendorMaster] FOREIGN KEY (VendorID) REFERENCES VendorMaster(VendorID)
 END
 GO
