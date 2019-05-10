@@ -1,5 +1,5 @@
-IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'stp_srv_GetUniqueProductDetails')
-	DROP PROCEDURE [dbo].[stp_srv_GetUniqueProductDetails]
+IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'stp_srv_GetUniqueVendorProductDetails')
+	DROP PROCEDURE [dbo].[stp_srv_GetUniqueVendorProductDetails]
 GO
 SET ANSI_NULLS ON
 GO
@@ -12,7 +12,7 @@ GO
 -- Execute: EXEC stp_srv_GetUniqueProductDetails 
 -- 
 -- =============================================
-CREATE PROCEDURE [dbo].[stp_srv_GetUniqueProductDetails]
+CREATE PROCEDURE [dbo].[stp_srv_GetUniqueVendorProductDetails]
 
 AS
 SET NOCOUNT ON;
@@ -23,5 +23,9 @@ BEGIN
 	WHERE PM.Deleted = 0
 	ORDER BY PM.ProductName
 	
+	SELECT VM.VendorID, LM.LocationName + ' - ' + VM.VendorName as VendorName
+	FROM VendorMaster VM INNER JOIN LocationMaster LM ON VM.LocationID = LM.LocationID
+	WHERE VM.Deleted = 0 AND LM.Deleted = 0
+	ORDER BY VM.LocationID, VM.VendorName
 END
 GO
