@@ -19,6 +19,7 @@ namespace InventoryManagementSystem.Models.BussinessMethods
             {
                 string serialNumber = i.ToString();
                 string dateImpress = System.DateTime.Now.ToString("ddMMyy");
+                //string dateImpress = "010519";
 
                 string Barcode = ProductID.PadLeft(3,'0') + LotNumber.PadLeft(4, '0') + dateImpress + serialNumber.PadLeft(3, '0');
 

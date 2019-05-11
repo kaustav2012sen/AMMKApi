@@ -34,7 +34,22 @@ namespace InventoryManagementSystem.Controllers
             return Ok(barcode);
         }
 
-        
+
+        [HttpPost]
+        [ActionName("GetProductVendorList")]
+        [Route("[action]")]
+        public ActionResult GetProductVendorList()
+        {
+            ProductDetailAccessLayer pdac = new ProductDetailAccessLayer();
+
+            InventoryModule inventoryModule = new InventoryModule();
+            inventoryModule = pdac.GetInventoryModule();
+              
+
+            return Ok(inventoryModule);
+        }
+
+
 
         [HttpPost]
         [ActionName("UpdateStock")]

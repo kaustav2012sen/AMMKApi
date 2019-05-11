@@ -48,5 +48,68 @@ namespace InventoryManagementSystem.Models
 
             return productDetails;
         }
+
+
+        public InventoryModule GetInventoryModule()
+        {
+            InventoryModule inventoryModules = new InventoryModule();
+            List<ProductDetails> productDetails = new List<ProductDetails>();
+            List<VendorDetails> vendorDetails = new List<VendorDetails>();
+
+            DataSet ds = new DataSet();
+
+            //DataTable dt = new DataTable();
+
+            SqlConnection con = new SqlConnection(Connection);
+            con.Open();
+            SqlDataAdapter da = new SqlDataAdapter();
+            SqlCommand cmd = new SqlCommand("stp_srv_GetUniqueVendorProductDetails", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            da.SelectCommand = cmd;
+            da.Fill(ds);
+            con.Close();
+
+
+            if(ds.Tables[0].Rows.Count>0)
+            {
+                ProductDetails pd;
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    pd = new ProductDetails();
+
+                    pd.ProductID = Convert.ToInt32(ds.Tables[0].Rows[i]["ProductID"].ToString());
+                    pd.ProductName = ds.Tables[0].Rows[i]["ProductName"].ToString();
+                    pd.BillingName = ds.Tables[0].Rows[i]["BillingName"].ToString();
+                    pd.Type = ds.Tables[0].Rows[0]["Type"].ToString();
+                    pd.GST = Convert.ToInt32(ds.Tables[0].Rows[i]["GST"].ToString());
+                    pd.HSNCode = Convert.ToInt32(ds.Tables[0].Rows[i]["HSN"].ToString());
+
+                    productDetails.Add(pd);
+                }
+            }
+
+            if(ds.Tables[1].Rows.Count>0)
+            {
+                VendorDetails vd;
+
+                for (int i = 0; i < ds.Tables[1].Rows.Count; i++)
+                {
+                    vd = new VendorDetails();
+
+                    vd.VendorID = Convert.ToInt32(ds.Tables[1].Rows[i]["VendorID"].ToString());
+                    vd.VendorName = ds.Tables[1].Rows[i]["VendorName"].ToString();
+                    vd.VendorLocation = ds.Tables[1].Rows[i]["LocationName"].ToString();
+
+
+                    vendorDetails.Add(vd);
+                }
+            }
+
+            inventoryModules.productDetails = productDetails;
+            inventoryModules.vendorDetails = vendorDetails;
+            return inventoryModules;
+        }
     }
 }
