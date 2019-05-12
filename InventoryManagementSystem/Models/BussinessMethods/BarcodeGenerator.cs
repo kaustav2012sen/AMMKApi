@@ -8,7 +8,7 @@ namespace InventoryManagementSystem.Models.BussinessMethods
 {
     public class BarcodeGenerator
     {
-        public DataTable GenerateBarcode(string LotNumber,int Quantity,string ProductID)
+        public DataTable GenerateBarcode(string LotNumber,int Quantity,string ProductID,string VendorID)
         {
             DataTable dt = new DataTable();
             dt.Columns.Add("ProductBarcode", typeof(string));
@@ -21,7 +21,7 @@ namespace InventoryManagementSystem.Models.BussinessMethods
                 string dateImpress = System.DateTime.Now.ToString("ddMMyy");
                 //string dateImpress = "010519";
 
-                string Barcode = ProductID.PadLeft(3,'0') + LotNumber.PadLeft(4, '0') + dateImpress + serialNumber.PadLeft(3, '0');
+                string Barcode = ProductID.PadLeft(3, '0') + VendorID.PadLeft(4, '0') + LotNumber.PadLeft(4, '0') + dateImpress + serialNumber.PadLeft(3, '0');
 
                 dt.Rows.Add(Barcode, Convert.ToInt32(LotNumber),Convert.ToInt32(ProductID));
             }

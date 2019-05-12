@@ -25,10 +25,11 @@ namespace InventoryManagementSystem.Controllers
             //UserDetails ud = new UserDetails();
             string ProductID = postBody["ProductID"].ToString();
             string Quantity = postBody["Quantity"].ToString();
+            string VendorID = postBody["VendorID"].ToString();
 
             string LotNumber=bdac.GetLotNumber(ProductID);
-            DataTable table = bdac.InsertBarcode(ProductID, Convert.ToInt32(Quantity), LotNumber);
-            barcode = bdac.GetBarcodeList(table,LotNumber,ProductID);
+            DataTable table = bdac.InsertBarcode(ProductID, Convert.ToInt32(Quantity), LotNumber, VendorID);
+            barcode = bdac.GetBarcodeList(table,LotNumber,ProductID,VendorID);
 
 
             return Ok(barcode);

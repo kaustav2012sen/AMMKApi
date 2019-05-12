@@ -37,15 +37,15 @@ namespace InventoryManagementSystem.Models
 
         }
 
-        public DataTable InsertBarcode(string ProductID,int Quantity,string LotNumber)
+        public DataTable InsertBarcode(string ProductID,int Quantity,string LotNumber,string VendorID)
         {
             DataTable table = new DataTable();
-            table = bg.GenerateBarcode(LotNumber, Quantity, ProductID);
+            table = bg.GenerateBarcode(LotNumber, Quantity, ProductID, VendorID);
 
             return table;
         }
 
-        public List<Barcode> GetBarcodeList(DataTable barcodetable,string LotNumber,string ProductID)
+        public List<Barcode> GetBarcodeList(DataTable barcodetable,string LotNumber,string ProductID, string VendorID)
         {
             List<Barcode> barCodeDetails = new List<Barcode>();
 
@@ -58,6 +58,7 @@ namespace InventoryManagementSystem.Models
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add("@ProductIDforRetreival", SqlDbType.Int).Value = Convert.ToInt32(ProductID);
             cmd.Parameters.Add("@LotNumberforRetreival", SqlDbType.Int).Value = Convert.ToInt32(LotNumber);
+            cmd.Parameters.Add("@VendorIDforRetreival", SqlDbType.Int).Value = Convert.ToInt32(VendorID);
             SqlParameter param = cmd.Parameters.AddWithValue("@BarcodeList", barcodetable);
 
             param.SqlDbType = SqlDbType.Structured;
