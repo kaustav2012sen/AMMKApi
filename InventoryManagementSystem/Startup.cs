@@ -32,6 +32,11 @@ namespace InventoryManagementSystem
             get;
             private set;
         }
+        public static string AllowedDomains
+        {
+            get;
+            private set;
+        }
         public Startup(IHostingEnvironment env)
         {
             Configuration = new ConfigurationBuilder().
@@ -60,9 +65,10 @@ namespace InventoryManagementSystem
             }
 
             ConnectionString = Configuration["ConnectionStrings:DefaultConnection"];
+            AllowedDomains = Configuration["AllowedIPDomain"];
 
             app.UseHttpsRedirection();
-            app.UseCors(builder => builder.WithOrigins("http://localhost:4200")
+            app.UseCors(builder => builder.WithOrigins(AllowedDomains)
             .AllowAnyHeader()
             .AllowAnyMethod());
             app.UseMvc(routes =>
