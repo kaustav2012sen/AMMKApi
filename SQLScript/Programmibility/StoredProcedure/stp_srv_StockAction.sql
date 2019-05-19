@@ -31,6 +31,9 @@ BEGIN
 			SET BarcodeStatus = @StockAction, ModifiedBy = @CreatedBy, DateModified = GETDATE()
 			WHERE Barcode = @BarcodeNumber;
 			
+			INSERT INTO ProductLotMappingHistory(Barcode, BarcodeStatus, Deleted, CreatedBy, DateEntered)
+			VALUES(@BarcodeNumber, @StockAction, 0, @CreatedBy, GETUTCDATE())
+			
 			SET @ActionCompletion = 1;
 			SET @Message = 'Barcode status updated successfully.';
 		END
