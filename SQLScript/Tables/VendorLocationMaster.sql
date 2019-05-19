@@ -20,7 +20,7 @@ CREATE TABLE [dbo].[VendorLocationMaster](
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
-ALTER TABLE [dbo].[VendorLocationMaster] ADD  CONSTRAINT [DF_LocationMaster_Deleted]  DEFAULT ((0)) FOR [Deleted]
+ALTER TABLE [dbo].[VendorLocationMaster] ADD  CONSTRAINT [DF_VendorLocationMaster_Deleted]  DEFAULT ((0)) FOR [Deleted]
 
 SET IDENTITY_INSERT [dbo].[VendorLocationMaster] ON
 INSERT [dbo].[VendorLocationMaster] ([VendorLocationID], [VendorLocationName], [Deleted], [CreatedBy], [DateEntered], [ModifiedBy], [DateModified]) VALUES (1, N'LOCAL', 0, NULL, NULL, NULL, NULL)

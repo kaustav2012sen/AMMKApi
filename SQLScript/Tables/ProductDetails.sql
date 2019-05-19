@@ -21,7 +21,7 @@ CREATE TABLE [dbo].[ProductDetails](
 ) ON [PRIMARY]
 
 ALTER TABLE [dbo].[ProductDetails] ADD  CONSTRAINT [DF_ProductDetails_Deleted]  DEFAULT ((0)) FOR [Deleted]
-ALTER TABLE [dbo].[ProductDetails] ADD CONSTRAINT [FK_ProductDetails_ProductMaster] FOREIGN KEY (ProductID) REFERENCES ProductMaster (ProductID)
+
 END
 GO
 

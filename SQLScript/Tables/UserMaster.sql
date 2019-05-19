@@ -28,6 +28,6 @@ CREATE TABLE [dbo].[UserMaster](
 ) ON [PRIMARY]
 
 ALTER TABLE [dbo].[UserMaster] ADD CONSTRAINT [DF_UserMaster_Deleted]  DEFAULT ((0)) FOR [Deleted]
-ALTER TABLE [dbo].[UserMaster] ADD CONSTRAINT [FK_UserMaster_RoleMaster] FOREIGN KEY (RoleID) REFERENCES RoleMaster(RoleID)
+
 END
 GO

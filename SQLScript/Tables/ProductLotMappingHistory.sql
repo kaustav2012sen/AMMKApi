@@ -9,6 +9,7 @@ BEGIN
 	[ProductLotMappingHistoryID] [int] IDENTITY(1,1) NOT NULL,
 	[Barcode] [nvarchar](20) NULL,
 	[BarcodeStatus] [int] NULL,
+	[LocationID] [int] NULL,
 	[Deleted] [bit] NULL,
 	[CreatedBy] [nvarchar](100) NULL,
 	[DateEntered] [datetime] NULL,
