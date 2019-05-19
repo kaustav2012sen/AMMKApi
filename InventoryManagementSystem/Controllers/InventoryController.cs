@@ -26,10 +26,11 @@ namespace InventoryManagementSystem.Controllers
             string ProductID = postBody["ProductID"].ToString();
             string Quantity = postBody["Quantity"].ToString();
             string VendorID = postBody["VendorID"].ToString();
+            string UserID = postBody["UserID"].ToString();
 
             string LotNumber=bdac.GetLotNumber(ProductID);
             DataTable table = bdac.InsertBarcode(ProductID, Convert.ToInt32(Quantity), LotNumber, VendorID);
-            barcode = bdac.GetBarcodeList(table,LotNumber,ProductID,VendorID);
+            barcode = bdac.GetBarcodeList(table,LotNumber,ProductID,VendorID ,UserID);
 
 
             return Ok(barcode);
@@ -96,11 +97,13 @@ namespace InventoryManagementSystem.Controllers
             BarcodeDataAccessLayer bdac = new BarcodeDataAccessLayer();
             List<Barcode> barcode = new List<Barcode>();
             //UserDetails ud = new UserDetails();
+              
+            string UserID = postBody["UserID"].ToString(); // added by gautam
             string BarcodeNumber = postBody["BarcodeNumber"].ToString();
             string StockAction = postBody["StockAction"].ToString();
 
             List<StockStatus> ss1 = new List<StockStatus>();
-            ss1 = bdac.StockInitialization(BarcodeNumber, StockAction);
+            ss1 = bdac.StockInitialization(BarcodeNumber, StockAction,UserID);
                         
             return Ok(ss1);
         }
