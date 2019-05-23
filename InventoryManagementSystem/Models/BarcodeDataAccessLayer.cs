@@ -59,7 +59,7 @@ namespace InventoryManagementSystem.Models
             cmd.Parameters.Add("@ProductIDforRetreival", SqlDbType.Int).Value = Convert.ToInt32(ProductID);
             cmd.Parameters.Add("@LotNumberforRetreival", SqlDbType.Int).Value = Convert.ToInt32(LotNumber);
             cmd.Parameters.Add("@VendorIDforRetreival", SqlDbType.Int).Value = Convert.ToInt32(VendorID);
-            cmd.Parameters.Add("@UserID", SqlDbType.Int).Value = UserID; //Added by Goutam Giri
+            cmd.Parameters.Add("@UserID", SqlDbType.NVarChar).Value = UserID; //Added by Goutam Giri
             SqlParameter param = cmd.Parameters.AddWithValue("@BarcodeList", barcodetable);
 
             param.SqlDbType = SqlDbType.Structured;
@@ -108,7 +108,7 @@ namespace InventoryManagementSystem.Models
             SqlDataAdapter da = new SqlDataAdapter();
             SqlCommand cmd = new SqlCommand("stp_srv_StockAction", con);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("@UserID", SqlDbType.Int).Value = UserID; // added by gautam
+            cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar).Value = UserID; // added by gautam
             cmd.Parameters.Add("@BarcodeNumber", SqlDbType.NVarChar).Value = Convert.ToString(BarcodeNumber);
             cmd.Parameters.Add("@StockAction", SqlDbType.Int).Value = Convert.ToInt32(StockAction);
 
