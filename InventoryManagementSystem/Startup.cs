@@ -69,6 +69,7 @@ namespace InventoryManagementSystem
 
             app.UseHttpsRedirection();
             app.UseCors(builder => builder.WithOrigins(AllowedDomains)
+            .AllowAnyOrigin()
             .AllowAnyHeader()
             .AllowAnyMethod());
             app.UseMvc(routes =>
