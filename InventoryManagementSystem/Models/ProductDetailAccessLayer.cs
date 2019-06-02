@@ -111,5 +111,82 @@ namespace InventoryManagementSystem.Models
             inventoryModules.vendorDetails = vendorDetails;
             return inventoryModules;
         }
+
+        public List<Barcode> ProductLotBarcodeNumbe(int ProductID, int LotNumber)
+        {
+            List<Barcode> productlotbarcode = new List<Barcode>();
+            Barcode barcodes;
+            DataTable dt = new DataTable();
+
+            SqlConnection con = new SqlConnection(Connection);
+            con.Open();
+            SqlDataAdapter da = new SqlDataAdapter();
+            SqlCommand cmd = new SqlCommand("stp_srv_GetProductLotIDBarcodeDetails", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = Convert.ToInt32(ProductID);
+            cmd.Parameters.Add("@LotNumber", SqlDbType.Int).Value = Convert.ToInt32(LotNumber);
+            cmd.ExecuteNonQuery();
+
+            da.SelectCommand = cmd;
+            da.Fill(dt);
+            con.Close();
+            for (int i = 0; i < dt.Rows.Count; i++)
+
+            {
+                barcodes = new Barcode();
+
+                barcodes.BarcodeNumber = dt.Rows[i]["Barcode"].ToString();
+                barcodes.LotNumber = Convert.ToString(LotNumber);
+
+                productlotbarcode.Add(barcodes);
+
+
+
+            }
+
+            return productlotbarcode;
+
+
+
+        }
+
+        public List<ProductLotDetails> ProductLotNumberInfo(int ProductID)
+        {
+
+            List<ProductLotDetails> ProductLotInfo = new List<ProductLotDetails>();
+            ProductLotDetails pld;
+
+
+            DataTable dt = new DataTable();
+
+            SqlConnection con = new SqlConnection(Connection);
+            con.Open();
+            SqlDataAdapter da = new SqlDataAdapter();
+            SqlCommand cmd = new SqlCommand("stv_srv_GetProductLotIdDetails", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = Convert.ToInt32(ProductID);
+            cmd.ExecuteNonQuery();
+
+            da.SelectCommand = cmd;
+            da.Fill(dt);
+            con.Close();
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+
+            {
+                pld = new ProductLotDetails();
+
+                pld.LotNumber = Convert.ToInt32(dt.Rows[i]["LotNumber"].ToString());
+
+                ProductLotInfo.Add(pld);
+
+
+
+            }
+
+            return ProductLotInfo;
+        }
     }
 }
