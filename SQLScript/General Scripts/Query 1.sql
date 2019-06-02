@@ -7,7 +7,7 @@ VALUES ('Rahul','Das','Naskar','54403','@abcd1234',1,1,0,NULL,GETUTCDATE())
 INSERT INTO UserMaster (FirstName,MiddleName,LastName,UserName,[Password],IsDefaultPassword,RoleID,Deleted,CreatedBy,DateEntered)
 VALUES ('Kunal',NULL,'Mukherjee','54402','@abcd1234',1,1,0,NULL,GETUTCDATE())
 INSERT INTO UserMaster (FirstName,MiddleName,LastName,UserName,[Password],IsDefaultPassword,RoleID,Deleted,CreatedBy,DateEntered)
-VALUES ('Kaustav',NULL,'Sen','54401','@abcd1234',1,1,0,NULL,GETUTCDATE())
+VALUES ('Kaustav',NULL,'Sen','54401','@abcd1234',1,5,0,NULL,GETUTCDATE())
 
 ----------------------------Dummy User List to check test pages------------------------------------
 INSERT INTO UserMaster (FirstName,MiddleName,LastName,UserName,[Password],IsDefaultPassword,RoleID,Deleted,CreatedBy,DateEntered)

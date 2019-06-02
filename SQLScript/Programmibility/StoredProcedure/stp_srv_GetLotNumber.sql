@@ -27,7 +27,7 @@ BEGIN
 	SET @LotNumber=(SELECT LM.LotNumber FROM LottingMaster LM WHERE LM.LotID=@ProductID);
 	SET @LotNumber=@LotNumber+1;
 
-	UPDATE LottingMaster SET LotNumber=@LotNumber WHERE LotID=@ProductID;
+	UPDATE LottingMaster SET LotNumber=@LotNumber, DateModified = GETDATE(), ModifiedBy=54401 WHERE LotID=@ProductID;
 	
 END
 GO

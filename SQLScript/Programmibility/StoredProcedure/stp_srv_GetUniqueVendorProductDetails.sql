@@ -23,9 +23,9 @@ BEGIN
 	WHERE PM.Deleted = 0
 	ORDER BY PM.ProductName
 	
-	SELECT VM.VendorID, LM.LocationName , VM.VendorName as VendorName
-	FROM VendorMaster VM INNER JOIN LocationMaster LM ON VM.LocationID = LM.LocationID
-	WHERE VM.Deleted = 0 AND LM.Deleted = 0
-	ORDER BY VM.LocationID, VM.VendorName
+	SELECT VM.VendorID, VLM.VendorLocationName LocationName, VM.VendorName as VendorName
+	FROM VendorMaster VM INNER JOIN VendorLocationMaster VLM ON VM.VendorLocationID = VLM.VendorLocationID
+	WHERE VM.Deleted = 0 AND VLM.Deleted = 0
+	ORDER BY VM.VendorLocationID, VM.VendorName
 END
 GO
