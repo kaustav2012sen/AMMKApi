@@ -140,6 +140,99 @@ namespace InventoryManagementSystem.Models
             return stockStat;
         }
 
+        #region // cheheck for barcode status for POS
+
+        public PosDetails PosInitialization(string BarcodeNumber)
+        {
+            PosDetails posDetails = new PosDetails();
+
+            DataTable dt = new DataTable();
+
+            SqlConnection con = new SqlConnection(Connection);
+            con.Open();
+            SqlDataAdapter da = new SqlDataAdapter();
+            SqlCommand cmd = new SqlCommand("stp_srv_GetPosBarcodeStatusCheck", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@BarcodeNumber", SqlDbType.NVarChar).Value = Convert.ToString(BarcodeNumber);
+
+            da.SelectCommand = cmd;
+            da.Fill(dt);
+            con.Close();
+
+            if (dt.Rows.Count > 0)
+            {
+                posDetails.ActiveState = true;
+                posDetails.BarcodeNumber = dt.Rows[0]["Barcode"].ToString();
+                posDetails.BarcodeStatus = dt.Rows[0]["BarcodeStatus"].ToString();
+                posDetails.GST = Convert.ToInt32(dt.Rows[0]["GST"].ToString());
+                posDetails.HSNCode = Convert.ToInt32(dt.Rows[0]["HSN"].ToString());
+                posDetails.ProductName = dt.Rows[0]["ProductName"].ToString();
+                posDetails.BillingName = dt.Rows[0]["BillingName"].ToString();
+            }
+            else
+            {
+                posDetails.ActiveState = false;
+            }
+
+            return posDetails;
+        }
+
+        #endregion
+
+        #region // for bill details and bill summary enter through SP
+
+        public PosDetails BillDetails(int TotalQty, double GrossBillValue, double BillDiscount, double TotalGSTValue, double NetBillValue, DataTable dtBillDetails)
+        {
+            PosDetails bill = new PosDetails();
+            SqlConnection con = new SqlConnection(Connection);
+            con.Open();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataSet ds = new DataSet();
+            SqlCommand cmd = new SqlCommand("stp_srv_PosGenerateBillDatails", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            //cmd.Parameters.Add("@UserID", SqlDbType.Int).Value = 1234;
+
+            cmd.Parameters.Add("@TotalQty", SqlDbType.Int).Value = TotalQty;
+            cmd.Parameters.Add("@GrossBillValue", SqlDbType.Float).Value = GrossBillValue;
+            cmd.Parameters.Add("@BillDiscount", SqlDbType.Float).Value = BillDiscount;
+            cmd.Parameters.Add("@TotalGSTValue", SqlDbType.Float).Value = TotalGSTValue;
+            cmd.Parameters.Add("@NetBillValue", SqlDbType.Float).Value = NetBillValue;
+            SqlParameter param = cmd.Parameters.AddWithValue("@BillList", dtBillDetails);
+
+            param.SqlDbType = SqlDbType.Structured;
+
+            //  cmd.ExecuteNonQuery();
+
+            da.SelectCommand = cmd;
+            da.Fill(ds);
+            con.Close();
+            // PosDetails bill;
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                bill.ActiveState = true;
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    //  bill = new PosDetails();
+                    bill.BillNumber = ds.Tables[1].Rows[i]["BillNumber"].ToString();
+                    bill.totalQty = Convert.ToInt32(ds.Tables[1].Rows[i]["TotalQty"]);
+                    bill.GrossBillValue = Convert.ToInt32(ds.Tables[1].Rows[i]["GrossBillValue"]);
+                    bill.Discount = Convert.ToInt32(ds.Tables[1].Rows[i]["BillDiscount"]);
+                    bill.GST = Convert.ToInt32(ds.Tables[1].Rows[i]["TotalGSTValue"]);
+                    bill.NetBillValue = Convert.ToInt32(ds.Tables[1].Rows[i]["NetBillValue"]);
+                }
+
+            }
+            else
+            {
+                bill.ActiveState = false;
+            }
+
+            return bill;
+        }
+
+        #endregion
+
 
     }
 }
