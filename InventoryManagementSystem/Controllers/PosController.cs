@@ -33,19 +33,22 @@ namespace InventoryManagementSystem.Controllers
         // 2nd array need to be passed with the totaling the values
 
         [HttpPost]
-        [ActionName("GeneratBill")]
+        [ActionName("GenerateBill")]
         [Route("[action]")]
-        public ActionResult GeneratBill([FromBody] List<JObject> postBody)
+        public ActionResult GenerateBill([FromBody] List<JObject> postBody)
         {
-            int listcount;
+            int listcount, dcount;
             string BillingName, ProductName, Barcodenumber;
+            string UserID = "";
             int HNScode;
-            double GrossBillValue = 0, TotalGSTValue = 0, GSTValue, NetBillValue = 0, BillDiscount = 0, Rate, GST, Cost;
+            double GrossBillValue = 0, TotalGSTValue = 0, GSTValue, NetBillValue = 0, Rate, GST, Cost, DiscountAmount = 0, CashAmount = 0, CardAmount = 0;
+            int Discount = 0, CardNumber = 0, TransactionType = 0;
 
-            listcount = postBody.Count;
-
+            listcount = postBody[0].Count;
+            dcount = postBody[1].Count;
             DataTable dtBillDetails;
             dtBillDetails = new DataTable();
+
             PosDetails posDetails = new PosDetails();
 
             dtBillDetails.Columns.Add("ProductBillingName", typeof(string));
@@ -56,20 +59,18 @@ namespace InventoryManagementSystem.Controllers
             dtBillDetails.Columns.Add("GSTPercent", typeof(double));
             dtBillDetails.Columns.Add("TotalValue", typeof(double));
 
+            //Bill Details
             for (int i = 0; i < listcount; i++)
             {
-                BillingName = postBody[i]["BillingName"].ToString();
-                ProductName = postBody[i]["ProductName"].ToString();
-                Barcodenumber = postBody[i]["BarcodeNumber"].ToString();
-                HNScode = Convert.ToInt32(postBody[i]["HSN"]);
-                Rate = Convert.ToDouble(postBody[i]["Rate"]);
-                GST = Convert.ToDouble(postBody[i]["GST"]);
-                Cost = Convert.ToDouble(postBody[i]["Cost"]);
+                BillingName = postBody[0][i]["BillingName"].ToString();
+                ProductName = postBody[0][i]["ProductName"].ToString();
+                Barcodenumber = postBody[0][i]["BarcodeNumber"].ToString();
+                HNScode = Convert.ToInt32(postBody[0][i]["HSN"]);
+                Rate = Convert.ToDouble(postBody[0][i]["Rate"]);
+                GST = Convert.ToDouble(postBody[0][i]["GST"]);
+                Cost = Convert.ToDouble(postBody[0][i]["Cost"]);
                 GSTValue = (Cost - Rate);
 
-                GrossBillValue += Rate;
-                TotalGSTValue += GSTValue;
-                NetBillValue += Cost;
                 DataRow dr = dtBillDetails.NewRow();
 
                 dr["ProductBillingName"] = BillingName;
@@ -83,8 +84,21 @@ namespace InventoryManagementSystem.Controllers
                 dtBillDetails.Rows.Add(dr);
             }
 
-            NetBillValue = GrossBillValue - (GrossBillValue * BillDiscount / 100);
-            posDetails = bdac.BillDetails(listcount, GrossBillValue, BillDiscount, TotalGSTValue, NetBillValue, dtBillDetails);
+            //Bill Summary
+            for (int j = 0; j < dcount; j++)
+            {
+                NetBillValue = Convert.ToDouble(postBody[1][j]["NetBillValue"]);
+                GrossBillValue = Convert.ToDouble(postBody[1][j]["GrossBillValue"]);
+                TotalGSTValue = Convert.ToDouble(postBody[1][j]["TotalGSTValue"]);
+                DiscountAmount = Convert.ToDouble(postBody[1][j]["DiscountAmount"]);
+                TransactionType = Convert.ToInt32(postBody[1][j]["TransactionType"]);
+                CashAmount = Convert.ToDouble(postBody[1][j]["CashAmount"]);
+                CardAmount = Convert.ToDouble(postBody[1][j]["CardAmount"]);
+                CardNumber = Convert.ToInt32(postBody[1][j]["CardNumber"]);
+                UserID = Convert.ToString(postBody[1][j]["UserID"]);
+            }
+
+            posDetails = bdac.BillDetails(listcount, GrossBillValue, Discount, TotalGSTValue, NetBillValue, dtBillDetails, DiscountAmount, TransactionType, CashAmount, CardAmount, CardNumber, UserID);
 
             return Ok(posDetails);
         }

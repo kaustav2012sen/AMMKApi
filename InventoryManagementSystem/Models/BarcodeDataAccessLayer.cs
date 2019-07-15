@@ -181,7 +181,7 @@ namespace InventoryManagementSystem.Models
 
         #region // for bill details and bill summary enter through SP
 
-        public PosDetails BillDetails(int TotalQty, double GrossBillValue, double BillDiscount, double TotalGSTValue, double NetBillValue, DataTable dtBillDetails)
+        public PosDetails BillDetails(int TotalQty, double GrossBillValue, double BillDiscount, double TotalGSTValue, double NetBillValue, DataTable dtBillDetails, double DiscountAmount, int TransactionType, double CashAmount, double CardAmount, int CardNumber, string UserID)
         {
             PosDetails bill = new PosDetails();
             SqlConnection con = new SqlConnection(Connection);
@@ -197,6 +197,13 @@ namespace InventoryManagementSystem.Models
             cmd.Parameters.Add("@BillDiscount", SqlDbType.Float).Value = BillDiscount;
             cmd.Parameters.Add("@TotalGSTValue", SqlDbType.Float).Value = TotalGSTValue;
             cmd.Parameters.Add("@NetBillValue", SqlDbType.Float).Value = NetBillValue;
+            cmd.Parameters.Add("@DiscountAmount", SqlDbType.Float).Value = DiscountAmount;
+            cmd.Parameters.Add("@TransactionType", SqlDbType.Int).Value = TransactionType;
+            cmd.Parameters.Add("@CashAmount", SqlDbType.Float).Value = CashAmount;
+            cmd.Parameters.Add("@CardAmount", SqlDbType.Float).Value = CardAmount;
+            cmd.Parameters.Add("@CardNumber", SqlDbType.Int).Value = CardNumber;
+            cmd.Parameters.Add("@UserID", SqlDbType.NVarChar).Value = UserID;
+
             SqlParameter param = cmd.Parameters.AddWithValue("@BillList", dtBillDetails);
 
             param.SqlDbType = SqlDbType.Structured;
@@ -220,6 +227,7 @@ namespace InventoryManagementSystem.Models
                     bill.Discount = Convert.ToInt32(ds.Tables[1].Rows[i]["BillDiscount"]);
                     bill.GST = Convert.ToInt32(ds.Tables[1].Rows[i]["TotalGSTValue"]);
                     bill.NetBillValue = Convert.ToInt32(ds.Tables[1].Rows[i]["NetBillValue"]);
+                    bill.DiscountAmount = Convert.ToInt16(ds.Tables[1].Rows[i]["DiscountAmount"]);
                 }
 
             }

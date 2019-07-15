@@ -37,9 +37,10 @@ namespace InventoryManagementSystem.Models
         [DataMember]
         public float totalQty { get; set; }
         [DataMember]
-        public float Discount { get; set; }
-
+        public int Discount { get; set; }
         [DataMember]
         public string BillNumber { get; set; }
+        [DataMember]
+        public float DiscountAmount { get; set; }
     }
 }
