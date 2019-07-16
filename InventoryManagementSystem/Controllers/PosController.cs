@@ -27,6 +27,8 @@ namespace InventoryManagementSystem.Controllers
             posDetails = bdac.PosInitialization(BarcodeNumber); //Definition in BarcodeDataAccessLayer
             return Ok(posDetails);
         }
+
+        
         #endregion
 
         #region // Generate bill with all the details, right now there is one array is passed for the product list,
@@ -35,7 +37,7 @@ namespace InventoryManagementSystem.Controllers
         [HttpPost]
         [ActionName("GenerateBill")]
         [Route("[action]")]
-        public ActionResult GenerateBill([FromBody] List<JObject> postBody)
+        public ActionResult GenerateBill([FromBody] List<JArray> postBody)
         {
             int listcount, dcount;
             string BillingName, ProductName, Barcodenumber;
