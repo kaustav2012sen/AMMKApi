@@ -181,9 +181,10 @@ namespace InventoryManagementSystem.Models
 
         #region // for bill details and bill summary enter through SP
 
-        public PosDetails BillDetails(int TotalQty, double GrossBillValue, double BillDiscount, double TotalGSTValue, double NetBillValue, DataTable dtBillDetails, double DiscountAmount, int TransactionType, double CashAmount, double CardAmount, int CardNumber, string UserID)
+        public List<PosDetails> BillDetails(int TotalQty, double GrossBillValue, double BillDiscount, double TotalGSTValue, double NetBillValue, DataTable dtBillDetails, double DiscountAmount, int TransactionType, double CashAmount, double CardAmount, int CardNumber, string UserID)
         {
-            PosDetails bill = new PosDetails();
+            List<PosDetails> posDetails = new List<PosDetails>();
+            PosDetails  bill = new PosDetails();
             SqlConnection con = new SqlConnection(Connection);
             con.Open();
             SqlDataAdapter da = new SqlDataAdapter();
@@ -218,7 +219,7 @@ namespace InventoryManagementSystem.Models
             {
                 bill.ActiveState = true;
 
-                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                for (int i = 0; i < ds.Tables[1].Rows.Count; i++)
                 {
                     //  bill = new PosDetails();
                     bill.BillNumber = ds.Tables[1].Rows[i]["BillNumber"].ToString();
@@ -228,15 +229,26 @@ namespace InventoryManagementSystem.Models
                     bill.GST = Convert.ToInt32(ds.Tables[1].Rows[i]["TotalGSTValue"]);
                     bill.NetBillValue = Convert.ToInt32(ds.Tables[1].Rows[i]["NetBillValue"]);
                     bill.DiscountAmount = Convert.ToInt16(ds.Tables[1].Rows[i]["DiscountAmount"]);
+                    bill.CGSTValue = (float) Convert.ToDouble(ds.Tables[1].Rows[i]["CGSTValue"]);
+                    bill.SGSTValue = (float)Convert.ToDouble(ds.Tables[1].Rows[i]["SGSTValue"]);
+                    bill.IGSTValue = (float)Convert.ToDouble(ds.Tables[1].Rows[i]["IGSTValue"]);
+                    bill.ItemGSTValue= (float)Convert.ToDouble(ds.Tables[1].Rows[i]["ItemGSTValue"]);
+                    bill.BillingName= ds.Tables[1].Rows[i]["ProductBillingName"].ToString();
+                    bill.Cost= (float)Convert.ToDouble(ds.Tables[1].Rows[i]["TotalValue"]);
+                    bill.Rate= (float)Convert.ToDouble(ds.Tables[1].Rows[i]["Rate"]); 
+                    bill.BarcodeNumber= ds.Tables[1].Rows[i]["Barcode"].ToString();
+
+                    posDetails.Add(bill);
                 }
 
             }
             else
             {
                 bill.ActiveState = false;
+                posDetails.Add(bill);
             }
 
-            return bill;
+            return posDetails;
         }
 
         #endregion

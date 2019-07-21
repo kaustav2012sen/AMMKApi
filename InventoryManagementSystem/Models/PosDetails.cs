@@ -23,9 +23,9 @@ namespace InventoryManagementSystem.Models
         [DataMember]
         public string BillingName { get; set; }
         [DataMember]
-        public decimal Rate { get; set; }
+        public float Rate { get; set; }
         [DataMember]
-        public decimal Cost { get; set; }
+        public float Cost { get; set; }
         [DataMember]
         public string Type { get; set; }
         [DataMember]
@@ -42,5 +42,13 @@ namespace InventoryManagementSystem.Models
         public string BillNumber { get; set; }
         [DataMember]
         public float DiscountAmount { get; set; }
+        [DataMember]
+        public float CGSTValue { get; set; }
+        [DataMember]
+        public float SGSTValue { get; set; }
+        [DataMember]
+        public float IGSTValue { get; set; }
+        [DataMember]
+        public float ItemGSTValue { get; set; }
     }
 }

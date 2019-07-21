@@ -43,7 +43,7 @@ namespace InventoryManagementSystem.Controllers
             string BillingName, ProductName, Barcodenumber;
             string UserID = "";
             int HNScode;
-            double GrossBillValue = 0, TotalGSTValue = 0, GSTValue, NetBillValue = 0, Rate, GST, Cost, DiscountAmount = 0, CashAmount = 0, CardAmount = 0;
+            double GrossBillValue = 0, TotalGSTValue = 0, GSTValue, NetBillValue = 0, Rate, GST, Cost, DiscountAmount = 0, CashAmount = 0, CardAmount = 0, CGSTValue=0, SGSTValue=0, IGSTValue=0;
             int Discount = 0, CardNumber = 0, TransactionType = 0;
 
             listcount = postBody[0].Count;
@@ -51,7 +51,7 @@ namespace InventoryManagementSystem.Controllers
             DataTable dtBillDetails;
             dtBillDetails = new DataTable();
 
-            PosDetails posDetails = new PosDetails();
+            List<PosDetails> posDetails = new List<PosDetails>();
 
             dtBillDetails.Columns.Add("ProductBillingName", typeof(string));
             dtBillDetails.Columns.Add("ProductName", typeof(string));
@@ -60,6 +60,10 @@ namespace InventoryManagementSystem.Controllers
             dtBillDetails.Columns.Add("Rate", typeof(double));
             dtBillDetails.Columns.Add("GSTPercent", typeof(double));
             dtBillDetails.Columns.Add("TotalValue", typeof(double));
+            dtBillDetails.Columns.Add("CGSTValue", typeof(double));
+            dtBillDetails.Columns.Add("SGSTValue", typeof(double));
+            dtBillDetails.Columns.Add("IGSTValue", typeof(double));
+            dtBillDetails.Columns.Add("ItemGSTValue", typeof(double));
 
             //Bill Details
             for (int i = 0; i < listcount; i++)
@@ -71,7 +75,11 @@ namespace InventoryManagementSystem.Controllers
                 Rate = Convert.ToDouble(postBody[0][i]["Rate"]);
                 GST = Convert.ToDouble(postBody[0][i]["GST"]);
                 Cost = Convert.ToDouble(postBody[0][i]["Cost"]);
-                GSTValue = (Cost - Rate);
+                CGSTValue = Convert.ToDouble(postBody[0][i]["CGSTValue"]);
+                SGSTValue = Convert.ToDouble(postBody[0][i]["SGSTValue"]);
+                IGSTValue = Convert.ToDouble(postBody[0][i]["IGSTValue"]);
+                GSTValue = Convert.ToInt32(postBody[0][i]["GSTValue"]);
+                //GSTValue = (Cost - Rate);
 
                 DataRow dr = dtBillDetails.NewRow();
 
@@ -81,7 +89,11 @@ namespace InventoryManagementSystem.Controllers
                 dr["HSN"] = HNScode;
                 dr["Rate"] = Rate;
                 dr["GSTPercent"] = GST;
-                dr["TotalValue"] = Cost;
+                dr["TotalValue"] = Cost;                
+                dr["CGSTValue"] = CGSTValue;
+                dr["SGSTValue"] = SGSTValue;
+                dr["IGSTValue"] = IGSTValue;
+                dr["ItemGSTValue"] = GSTValue;
 
                 dtBillDetails.Rows.Add(dr);
             }
