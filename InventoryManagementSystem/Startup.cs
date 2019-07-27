@@ -40,9 +40,9 @@ namespace InventoryManagementSystem
         public Startup(IHostingEnvironment env)
         {
             Configuration = new ConfigurationBuilder().
-                SetBasePath(env.ContentRootPath).
-                AddJsonFile("appSettings.json").
-                Build();
+            SetBasePath(env.ContentRootPath).
+            AddJsonFile("appSettings.json").
+            Build();
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -80,6 +80,6 @@ namespace InventoryManagementSystem
             });
         }
 
-        
+
     }
 }

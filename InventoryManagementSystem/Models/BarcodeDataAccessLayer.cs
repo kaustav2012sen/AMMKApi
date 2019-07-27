@@ -181,17 +181,22 @@ namespace InventoryManagementSystem.Models
 
         #region // for bill details and bill summary enter through SP
 
-        public List<PosDetails> BillDetails(int TotalQty, double GrossBillValue, double BillDiscount, double TotalGSTValue, double NetBillValue, DataTable dtBillDetails, double DiscountAmount, int TransactionType, double CashAmount, double CardAmount, int CardNumber, string UserID)
+        public List<PosDetails> BillDetails(int TotalQty, double GrossBillValue, double BillDiscount, double TotalGSTValue, double NetBillValue, DataTable dtBillDetails, double DiscountAmount, int TransactionType, double CashAmount, double CardAmount, int CardNumber, string UserID, bool PendingBill, double PendingAmount)
         {
+            float TotalPaidAmount = (float)CashAmount + (float)CardAmount;
+
+
             List<PosDetails> posDetails = new List<PosDetails>();
-            PosDetails  bill = new PosDetails();
+            PosDetails bill;
             SqlConnection con = new SqlConnection(Connection);
             con.Open();
             SqlDataAdapter da = new SqlDataAdapter();
             DataSet ds = new DataSet();
-            SqlCommand cmd = new SqlCommand("stp_srv_PosGenerateBillDatails", con);
+            SqlCommand cmd = new SqlCommand("stp_srv_PosGenerateBillDetails", con);
             cmd.CommandType = CommandType.StoredProcedure;
             //cmd.Parameters.Add("@UserID", SqlDbType.Int).Value = 1234;
+
+
 
             cmd.Parameters.Add("@TotalQty", SqlDbType.Int).Value = TotalQty;
             cmd.Parameters.Add("@GrossBillValue", SqlDbType.Float).Value = GrossBillValue;
@@ -204,6 +209,9 @@ namespace InventoryManagementSystem.Models
             cmd.Parameters.Add("@CardAmount", SqlDbType.Float).Value = CardAmount;
             cmd.Parameters.Add("@CardNumber", SqlDbType.Int).Value = CardNumber;
             cmd.Parameters.Add("@UserID", SqlDbType.NVarChar).Value = UserID;
+            cmd.Parameters.Add("@PendingBill", SqlDbType.Bit).Value = PendingBill;
+            cmd.Parameters.Add("@PendingAmount", SqlDbType.Float).Value = PendingAmount;
+            cmd.Parameters.Add("@TotalPaidAmount", SqlDbType.Float).Value = TotalPaidAmount;
 
             SqlParameter param = cmd.Parameters.AddWithValue("@BillList", dtBillDetails);
 
@@ -217,26 +225,31 @@ namespace InventoryManagementSystem.Models
             // PosDetails bill;
             if (ds.Tables[0].Rows.Count > 0)
             {
-                bill.ActiveState = true;
+
 
                 for (int i = 0; i < ds.Tables[1].Rows.Count; i++)
                 {
-                    //  bill = new PosDetails();
+                    bill = new PosDetails();
+                    bill.ActiveState = true;
                     bill.BillNumber = ds.Tables[1].Rows[i]["BillNumber"].ToString();
                     bill.totalQty = Convert.ToInt32(ds.Tables[1].Rows[i]["TotalQty"]);
-                    bill.GrossBillValue = Convert.ToInt32(ds.Tables[1].Rows[i]["GrossBillValue"]);
+                    bill.GrossBillValue = (float)Convert.ToDouble(ds.Tables[1].Rows[i]["GrossBillValue"]);
                     bill.Discount = Convert.ToInt32(ds.Tables[1].Rows[i]["BillDiscount"]);
-                    bill.GST = Convert.ToInt32(ds.Tables[1].Rows[i]["TotalGSTValue"]);
+                    bill.GST = (float)Convert.ToDouble(ds.Tables[1].Rows[i]["TotalGSTValue"]);
                     bill.NetBillValue = Convert.ToInt32(ds.Tables[1].Rows[i]["NetBillValue"]);
                     bill.DiscountAmount = Convert.ToInt16(ds.Tables[1].Rows[i]["DiscountAmount"]);
-                    bill.CGSTValue = (float) Convert.ToDouble(ds.Tables[1].Rows[i]["CGSTValue"]);
+                    bill.CGSTValue = (float)Convert.ToDouble(ds.Tables[1].Rows[i]["CGSTValue"]);
                     bill.SGSTValue = (float)Convert.ToDouble(ds.Tables[1].Rows[i]["SGSTValue"]);
                     bill.IGSTValue = (float)Convert.ToDouble(ds.Tables[1].Rows[i]["IGSTValue"]);
-                    bill.ItemGSTValue= (float)Convert.ToDouble(ds.Tables[1].Rows[i]["ItemGSTValue"]);
-                    bill.BillingName= ds.Tables[1].Rows[i]["ProductBillingName"].ToString();
-                    bill.Cost= (float)Convert.ToDouble(ds.Tables[1].Rows[i]["TotalValue"]);
-                    bill.Rate= (float)Convert.ToDouble(ds.Tables[1].Rows[i]["Rate"]); 
-                    bill.BarcodeNumber= ds.Tables[1].Rows[i]["Barcode"].ToString();
+                    bill.ItemGSTValue = (float)Convert.ToDouble(ds.Tables[1].Rows[i]["ItemGSTValue"]);
+                    bill.BillingName = ds.Tables[1].Rows[i]["ProductBillingName"].ToString();
+                    bill.Cost = (float)Convert.ToDouble(ds.Tables[1].Rows[i]["TotalValue"]);
+                    bill.Rate = (float)Convert.ToDouble(ds.Tables[1].Rows[i]["Rate"]);
+                    bill.BarcodeNumber = ds.Tables[1].Rows[i]["Barcode"].ToString();
+                    bill.GSTpercent = Convert.ToInt32(ds.Tables[1].Rows[i]["GSTPercent"]);
+                    bill.HSNCode = Convert.ToInt32(ds.Tables[1].Rows[i]["HSN"]);
+                    bill.BillDate = Convert.ToString(ds.Tables[1].Rows[i]["BillDate"]);
+
 
                     posDetails.Add(bill);
                 }
@@ -244,6 +257,8 @@ namespace InventoryManagementSystem.Models
             }
             else
             {
+                bill = new PosDetails();
+
                 bill.ActiveState = false;
                 posDetails.Add(bill);
             }

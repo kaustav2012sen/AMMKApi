@@ -17,7 +17,7 @@ namespace InventoryManagementSystem.Models
         [DataMember]
         public string ProductName { get; set; }
         [DataMember]
-        public int GST { get; set; }
+        public float GST { get; set; }
         [DataMember]
         public int HSNCode { get; set; }
         [DataMember]
@@ -50,5 +50,9 @@ namespace InventoryManagementSystem.Models
         public float IGSTValue { get; set; }
         [DataMember]
         public float ItemGSTValue { get; set; }
+        [DataMember]
+        public int GSTpercent { get; set; }
+        [DataMember]
+        public string BillDate { get; set; }
     }
 }
