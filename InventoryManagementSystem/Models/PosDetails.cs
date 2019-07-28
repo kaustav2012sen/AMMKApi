@@ -54,5 +54,7 @@ namespace InventoryManagementSystem.Models
         public int GSTpercent { get; set; }
         [DataMember]
         public string BillDate { get; set; }
+        [DataMember]
+        public float BillPendingAmount { get; set; }
     }
 }

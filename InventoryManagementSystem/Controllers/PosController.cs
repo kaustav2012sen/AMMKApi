@@ -122,6 +122,66 @@ namespace InventoryManagementSystem.Controllers
 
         #endregion
 
+        #region Generate Pending Bill
 
+        [HttpPost]
+        [ActionName("PendingBillClearance")]
+        [Route("[action]")]
+        public ActionResult PendingBillClearance([FromBody] JObject postBody)
+        {
+            List<PosDetails> posDetails = new List<PosDetails>();
+
+            BarcodeDataAccessLayer bdac = new BarcodeDataAccessLayer();
+            string BillNumber = postBody["BillNumber"].ToString();
+            float AmountCleared = (float)Convert.ToDouble(postBody["AmountCleared"]);
+            float PendingValue = (float)Convert.ToDouble(postBody["PendingValue"]);
+            string UserID = postBody["UserID"].ToString();
+
+            posDetails = bdac.ClearPendingBill(BillNumber, AmountCleared, PendingValue, UserID);
+
+
+
+
+            return Ok(posDetails);
+
+        }
+
+        #endregion
+
+
+        #region RePrintBill
+
+        [HttpPost]
+        [ActionName("RePrintBill")]
+        [Route("[action]")]
+        public ActionResult RePrintBill([FromBody] JObject postBody)
+        {
+            List<PosDetails> posDetails = new List<PosDetails>();
+            BarcodeDataAccessLayer bdac = new BarcodeDataAccessLayer();
+            string BillNumber = postBody["BillNumber"].ToString();
+            posDetails = bdac.RePrintBill(BillNumber);
+
+            return Ok(posDetails);
+        }
+
+        #endregion
+
+
+        #region Get Pending Bill
+
+        [HttpPost]
+        [ActionName("GetPendingBill")]
+        [Route("[action]")]
+        public ActionResult GetPendingBill()
+        {
+            List<PosDetails> posDetails = new List<PosDetails>();
+            BarcodeDataAccessLayer bdac = new BarcodeDataAccessLayer();
+
+            posDetails = bdac.GetPendingBill();
+
+            return Ok(posDetails);
+        }
+
+        #endregion
     }
 }

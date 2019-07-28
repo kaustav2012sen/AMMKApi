@@ -240,7 +240,8 @@ namespace InventoryManagementSystem.Models
                     bill.DiscountAmount = Convert.ToInt16(ds.Tables[1].Rows[i]["DiscountAmount"]);
                     bill.CGSTValue = (float)Convert.ToDouble(ds.Tables[1].Rows[i]["CGSTValue"]);
                     bill.SGSTValue = (float)Convert.ToDouble(ds.Tables[1].Rows[i]["SGSTValue"]);
-                    bill.IGSTValue = (float)Convert.ToDouble(ds.Tables[1].Rows[i]["IGSTValue"]);
+                    bill.IGSTValue = (float)Convert.ToDouble(ds.Tables[1].Rows[i]["IGS" +
+                        "TValue"]);
                     bill.ItemGSTValue = (float)Convert.ToDouble(ds.Tables[1].Rows[i]["ItemGSTValue"]);
                     bill.BillingName = ds.Tables[1].Rows[i]["ProductBillingName"].ToString();
                     bill.Cost = (float)Convert.ToDouble(ds.Tables[1].Rows[i]["TotalValue"]);
@@ -249,6 +250,7 @@ namespace InventoryManagementSystem.Models
                     bill.GSTpercent = Convert.ToInt32(ds.Tables[1].Rows[i]["GSTPercent"]);
                     bill.HSNCode = Convert.ToInt32(ds.Tables[1].Rows[i]["HSN"]);
                     bill.BillDate = Convert.ToString(ds.Tables[1].Rows[i]["BillDate"]);
+                    bill.BillPendingAmount = (float)Convert.ToDouble(ds.Tables[1].Rows[i]["BillRemainderValue"]);
 
 
                     posDetails.Add(bill);
@@ -268,6 +270,198 @@ namespace InventoryManagementSystem.Models
 
         #endregion
 
+
+        #region Pending Bill Clearance
+
+        public List<PosDetails> ClearPendingBill(string BillNumber, float AmountPaid, float PendingAmount, string UserID)
+        {
+            List<PosDetails> posDetails = new List<PosDetails>();
+            PosDetails bill;
+
+            bool BillState = true;
+
+            if (PendingAmount == 0)
+            {
+                BillState = false;
+            }
+
+            SqlConnection con = new SqlConnection(Connection);
+            con.Open();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataSet ds = new DataSet();
+            SqlCommand cmd = new SqlCommand("stp_srv_PosClearPendingBill", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@BillNumber", SqlDbType.NVarChar).Value = BillNumber;
+            cmd.Parameters.Add("@AmountPaid", SqlDbType.Float).Value = AmountPaid;
+            cmd.Parameters.Add("@PendingAmount", SqlDbType.Float).Value = PendingAmount;
+            cmd.Parameters.Add("@BillState", SqlDbType.Bit).Value = BillState;
+            cmd.Parameters.Add("@UserID", SqlDbType.NVarChar).Value = UserID;
+            da.SelectCommand = cmd;
+            da.Fill(ds);
+            con.Close();
+
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    bill = new PosDetails();
+                    bill.ActiveState = true;
+                    bill.BillNumber = ds.Tables[0].Rows[i]["BillNumber"].ToString();
+                    bill.totalQty = Convert.ToInt32(ds.Tables[0].Rows[i]["TotalQty"]);
+                    bill.GrossBillValue = (float)Convert.ToDouble(ds.Tables[0].Rows[i]["GrossBillValue"]);
+                    bill.Discount = Convert.ToInt32(ds.Tables[0].Rows[i]["BillDiscount"]);
+                    bill.GST = (float)Convert.ToDouble(ds.Tables[0].Rows[i]["TotalGSTValue"]);
+                    bill.NetBillValue = Convert.ToInt32(ds.Tables[0].Rows[i]["NetBillValue"]);
+                    bill.DiscountAmount = Convert.ToInt16(ds.Tables[0].Rows[i]["DiscountAmount"]);
+                    bill.CGSTValue = (float)Convert.ToDouble(ds.Tables[0].Rows[i]["CGSTValue"]);
+                    bill.SGSTValue = (float)Convert.ToDouble(ds.Tables[0].Rows[i]["SGSTValue"]);
+                    bill.IGSTValue = (float)Convert.ToDouble(ds.Tables[0].Rows[i]["IGSTValue"]);
+                    bill.ItemGSTValue = (float)Convert.ToDouble(ds.Tables[0].Rows[i]["ItemGSTValue"]);
+                    bill.BillingName = ds.Tables[0].Rows[i]["ProductBillingName"].ToString();
+                    bill.Cost = (float)Convert.ToDouble(ds.Tables[0].Rows[i]["TotalValue"]);
+                    bill.Rate = (float)Convert.ToDouble(ds.Tables[0].Rows[i]["Rate"]);
+                    bill.BarcodeNumber = ds.Tables[0].Rows[i]["Barcode"].ToString();
+                    bill.GSTpercent = Convert.ToInt32(ds.Tables[0].Rows[i]["GSTPercent"]);
+                    bill.HSNCode = Convert.ToInt32(ds.Tables[0].Rows[i]["HSN"]);
+                    bill.BillDate = Convert.ToString(ds.Tables[0].Rows[i]["BillDate"]);
+                    bill.BillPendingAmount = (float)Convert.ToDouble(ds.Tables[0].Rows[i]["BillRemainderValue"]);
+
+                    posDetails.Add(bill);
+                }
+
+            }
+            else
+            {
+                bill = new PosDetails();
+
+                bill.ActiveState = false;
+                posDetails.Add(bill);
+            }
+
+            return posDetails;
+        }
+
+        #endregion
+
+        #region ReprintBill
+
+        public List<PosDetails> RePrintBill(string BillNumber)
+        {
+            List<PosDetails> posDetails = new List<PosDetails>();
+            PosDetails bill;
+
+
+            SqlConnection con = new SqlConnection(Connection);
+            con.Open();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataSet ds = new DataSet();
+            SqlCommand cmd = new SqlCommand("stp_srv_RePrintBill", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@BillNumber", SqlDbType.NVarChar).Value = BillNumber;
+
+            da.SelectCommand = cmd;
+            da.Fill(ds);
+            con.Close();
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    bill = new PosDetails();
+                    bill.ActiveState = true;
+                    bill.BillNumber = ds.Tables[0].Rows[i]["BillNumber"].ToString();
+                    bill.totalQty = Convert.ToInt32(ds.Tables[0].Rows[i]["TotalQty"]);
+                    bill.GrossBillValue = (float)Convert.ToDouble(ds.Tables[0].Rows[i]["GrossBillValue"]);
+                    bill.Discount = Convert.ToInt32(ds.Tables[0].Rows[i]["BillDiscount"]);
+                    bill.GST = (float)Convert.ToDouble(ds.Tables[0].Rows[i]["TotalGSTValue"]);
+                    bill.NetBillValue = Convert.ToInt32(ds.Tables[0].Rows[i]["NetBillValue"]);
+                    bill.DiscountAmount = Convert.ToInt16(ds.Tables[0].Rows[i]["DiscountAmount"]);
+                    bill.CGSTValue = (float)Convert.ToDouble(ds.Tables[0].Rows[i]["CGSTValue"]);
+                    bill.SGSTValue = (float)Convert.ToDouble(ds.Tables[0].Rows[i]["SGSTValue"]);
+                    bill.IGSTValue = (float)Convert.ToDouble(ds.Tables[0].Rows[i]["IGSTValue"]);
+                    bill.ItemGSTValue = (float)Convert.ToDouble(ds.Tables[0].Rows[i]["ItemGSTValue"]);
+                    bill.BillingName = ds.Tables[0].Rows[i]["ProductBillingName"].ToString();
+                    bill.Cost = (float)Convert.ToDouble(ds.Tables[0].Rows[i]["TotalValue"]);
+                    bill.Rate = (float)Convert.ToDouble(ds.Tables[0].Rows[i]["Rate"]);
+                    bill.BarcodeNumber = ds.Tables[0].Rows[i]["Barcode"].ToString();
+                    bill.GSTpercent = Convert.ToInt32(ds.Tables[0].Rows[i]["GSTPercent"]);
+                    bill.HSNCode = Convert.ToInt32(ds.Tables[0].Rows[i]["HSN"]);
+                    bill.BillDate = Convert.ToString(ds.Tables[0].Rows[i]["BillDate"]);
+                    bill.BillPendingAmount = (float)Convert.ToDouble(ds.Tables[0].Rows[i]["BillRemainderValue"]);
+
+                    posDetails.Add(bill);
+                }
+
+            }
+            else
+            {
+                bill = new PosDetails();
+
+                bill.ActiveState = false;
+                posDetails.Add(bill);
+            }
+
+            return posDetails;
+        }
+
+        #endregion
+
+        #region GetPending Bill
+
+        public List<PosDetails> GetPendingBill()
+        {
+            List<PosDetails> posDetails = new List<PosDetails>();
+            PosDetails bill;
+            SqlConnection con = new SqlConnection(Connection);
+            con.Open();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataSet ds = new DataSet();
+            SqlCommand cmd = new SqlCommand("stp_srv_SelectPendingBill", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+
+
+            da.SelectCommand = cmd;
+            da.Fill(ds);
+            con.Close();
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    bill = new PosDetails();
+                    bill.ActiveState = true;
+                    bill.BillNumber = ds.Tables[0].Rows[i]["BillNumber"].ToString();
+                    bill.totalQty = Convert.ToInt32(ds.Tables[0].Rows[i]["TotalQty"]);
+                    bill.GrossBillValue = (float)Convert.ToDouble(ds.Tables[0].Rows[i]["GrossBillValue"]);
+                    bill.Discount = Convert.ToInt32(ds.Tables[0].Rows[i]["BillDiscount"]);
+                    bill.GST = (float)Convert.ToDouble(ds.Tables[0].Rows[i]["TotalGSTValue"]);
+                    bill.NetBillValue = Convert.ToInt32(ds.Tables[0].Rows[i]["NetBillValue"]);
+                    bill.BillDate = Convert.ToString(ds.Tables[0].Rows[i]["BillDate"]);
+                    bill.BillPendingAmount = (float)Convert.ToDouble(ds.Tables[0].Rows[i]["BillRemainderValue"]);
+
+                    posDetails.Add(bill);
+                }
+
+            }
+            else
+            {
+                bill = new PosDetails();
+
+                bill.ActiveState = false;
+                posDetails.Add(bill);
+            }
+
+            return posDetails;
+        }
+
+        #endregion
 
     }
 }
