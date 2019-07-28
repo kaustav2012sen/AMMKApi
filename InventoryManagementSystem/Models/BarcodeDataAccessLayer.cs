@@ -177,6 +177,49 @@ namespace InventoryManagementSystem.Models
             return posDetails;
         }
 
+        public List<PosDetails> PosInitialization(string BarcodeNumber, string SingleBarcode)
+        {
+            List<PosDetails> bill = new List<PosDetails>();
+            PosDetails posDetails;
+            DataTable dt = new DataTable();
+
+            SqlConnection con = new SqlConnection(Connection);
+            con.Open();
+            SqlDataAdapter da = new SqlDataAdapter();
+            SqlCommand cmd = new SqlCommand("stp_srv_GetPosBarcodeStatusCheck", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@BarcodeNumber", SqlDbType.NVarChar).Value = Convert.ToString(BarcodeNumber);
+            cmd.Parameters.Add("@SingleBarcode", SqlDbType.Bit).Value = Convert.ToBoolean(SingleBarcode);
+
+            da.SelectCommand = cmd;
+            da.Fill(dt);
+            con.Close();
+
+            if (dt.Rows.Count > 0)
+            {
+                posDetails = new PosDetails();
+                posDetails.ActiveState = true;
+                posDetails.BarcodeNumber = dt.Rows[0]["Barcode"].ToString();
+                posDetails.BarcodeStatus = dt.Rows[0]["BarcodeStatus"].ToString();
+                posDetails.GST = Convert.ToInt32(dt.Rows[0]["GST"].ToString());
+                posDetails.HSNCode = Convert.ToInt32(dt.Rows[0]["HSN"].ToString());
+                posDetails.ProductName = dt.Rows[0]["ProductName"].ToString();
+                posDetails.BillingName = dt.Rows[0]["BillingName"].ToString();
+
+                bill.Add(posDetails);
+
+            }
+            else
+            {
+                posDetails = new PosDetails();
+                posDetails.ActiveState = false;
+                bill.Add(posDetails);
+
+
+            }
+
+            return bill;
+        }
         #endregion
 
         #region // for bill details and bill summary enter through SP
@@ -463,5 +506,6 @@ namespace InventoryManagementSystem.Models
 
         #endregion
 
+        
     }
 }

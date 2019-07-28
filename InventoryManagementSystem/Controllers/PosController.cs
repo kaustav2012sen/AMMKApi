@@ -183,5 +183,27 @@ namespace InventoryManagementSystem.Controllers
         }
 
         #endregion
+
+        #region //Check Print Barcode
+
+        [HttpPost]
+        [ActionName("CheckBarcode")]
+        [Route("[action]")]
+        public ActionResult CheckBarcode([FromBody] JObject postBody)
+        {
+            List<PosDetails> posDetails = new List<PosDetails>();
+            BarcodeDataAccessLayer bdac = new BarcodeDataAccessLayer();
+            string BarcodeNumber = postBody["BarcodeNumber"].ToString();
+            string SingleBarcode = postBody["SingleBarcode"].ToString();
+
+            posDetails = bdac.PosInitialization(BarcodeNumber, SingleBarcode); //Definition in BarcodeDataAccessLayer
+            //bdal.GetBarcodeNumber(BarcodeNumber);
+
+            //barcode = bdal.GetBarcodeNumber(BarcodeNumber);
+
+            return Ok(posDetails);
+        }
+
+        #endregion
     }
 }
